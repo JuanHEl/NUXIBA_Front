@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
+import { axiosInstances } from "../../instances/axiosInstances";
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const { data } = await axios.get(
-    "https://jsonplaceholder.typicode.com/users"
+  const { data } = await axiosInstances.get(
+    "users"
   );
   return data;
 });
@@ -11,8 +12,8 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
 export const fetchUserPosts = createAsyncThunk(
   "users/fetchUserPosts",
   async (userId) => {
-    const { data } = await axios.get(
-      `https://jsonplaceholder.typicode.com/users/${userId}/posts`
+    const { data } = await axiosInstances.get(
+      `users/${userId}/posts`
     );
     return data;
   }
@@ -21,8 +22,8 @@ export const fetchUserPosts = createAsyncThunk(
 export const fetchUserTodos = createAsyncThunk(
   "users/fetchUserTodos",
   async (userId) => {
-    const { data } = await axios.get(
-      `https://jsonplaceholder.typicode.com/users/${userId}/todos`
+    const { data } = await axiosInstances.get(
+      `users/${userId}/todos`
     );
     return data;
   }
@@ -31,8 +32,8 @@ export const fetchUserTodos = createAsyncThunk(
 export const addTodo = createAsyncThunk(
   "users/addTodo",
   async ({ userId, title, completed }) => {
-    const { data } = await axios.post(
-      `https://jsonplaceholder.typicode.com/users/${userId}/todos`,
+    const { data } = await axiosInstances.post(
+      `users/${userId}/todos`,
       {
         title,
         completed,
