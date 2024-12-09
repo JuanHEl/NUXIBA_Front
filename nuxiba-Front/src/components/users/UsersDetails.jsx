@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserPosts, fetchUserTodos } from "../store/user/userSlice";
-import AddTodoForm from "./AddTodoForm";
+import React from "react";
+import { useUserDetailsLogic } from "./UserDetails.logic";
+import { duvUserDetail } from "./UserDetailsStyle";
+import AddTodoForm from "../Forms/AddTodoForm";
 
 const UserDetails = () => {
-  const dispatch = useDispatch();
-  const selectedUser = useSelector((state) => state.users.selectedUser);
-  const posts = useSelector((state) => state.users.posts);
-  const todos = useSelector((state) => state.users.todos);
-  const [selectedOption, setSelectedOption] = useState("");
-
-  useEffect(() => {
-    if (selectedUser) {
-      dispatch(fetchUserPosts(selectedUser.id));
-      dispatch(fetchUserTodos(selectedUser.id));
-    }
-  }, [dispatch, selectedUser]);
+  const { posts, todos, selectedUser, selectedOption, setSelectedOption } =
+    useUserDetailsLogic();
 
   if (!selectedUser) {
     return <div>Selecciona un usuario</div>;
@@ -30,12 +20,7 @@ const UserDetails = () => {
         <p>Email: {selectedUser.email}</p>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+      <div style={duvUserDetail}>
         <button onClick={() => setSelectedOption("Todo")}>Todo</button>
         <button onClick={() => setSelectedOption("Post")}>Post</button>
         <button onClick={() => setSelectedOption("Tarea")}>
